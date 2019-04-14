@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+    <body style="background-color:#393E46;">
+        <div style="text-align: center;">
+            <a href="/"><img src="/static/banner.png" width="600px"></a><br>
+            <a href="/createproject"><img src="/static/invest_subbanner.png" width="600px"></a><br>
+            <div style="display: inline-block; text-align: left;">
+                <div class="box" style="width: 600px">
+                    <font  face="Helvetica" color="white">
+                        <form action="{{ url_for('add_investor') }}" method='post'>
+                        Project address:<br>
+                        <input type="text" name="target_address" size=50 value='{{ address }}'><br><br>
+                        Transaction ID and vout:<br>
+                        <input type="text" name="txid" size="50"> <input type="text" name="vout" size="2"><br><br>
+                        Investment (in Satoshis):<br>
+                        <input type="number" name="amount" min="0"><br><br>
+                        <input type="submit" value="Submit">
+                        </form>
+                    </font>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

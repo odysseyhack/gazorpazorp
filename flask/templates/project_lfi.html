@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+    <body style="background-color:#393E46;">
+        <div style="text-align: center;">
+            <a href="/"><img src="/static/banner.png" width="600px"></a><br>
+            <div style="display: inline-block; text-align: left;">
+                <div class="box" style="width: 600px">
+                    <font face="Helvetica" color="white">
+                        <h1>{{ project['name'] }}</h1>
+                    </font>
+                    <font  face="Helvetica" color=FFF0FF>
+                        {{ project['description'] }}<br><br>
+                        We expect to get our returns {{ project['etr'] }} days after the investment target is met.
+                        <h3>Investors</h3>
+                        {% for investor_address in project['investors'].keys() %}
+                        <b>{{ project['investors'][investor_address] }} Satoshis</b> pledged by <b>{{ investor_address }}</b><br>
+                        {% endfor %}<br>
+                        Collected <font color=FF3F34><b>{{ collected }}/{{ project['target'] }}</b></font> Satoshis.
+                        <a href="{{ url_for('invest') + '{}'.format(address) }}" style="color: rgb(0,255,0)">Invest</a>
+                    </font>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+    <body style="background-color:#393E46;">
+        <div style="text-align: center;">
+            <a href="/"><img src="static/banner.png" width="600px"></a><br>
+            <a href="/projects"><img src="static/projects_subbanner.png" width="600px"></a><br>
+            <div style="display: inline-block; text-align: left;">
+                <font face="Helvetica" color="white">
+                    <div class="box" style="width: 600px">
+                        {% for id in projects.keys() %}
+                        <h1>{{ projects[id]['name'] }} </h1>
+                        <h3>Target: {{ projects[id]['target'] }} Satoshis</h3>
+                        {{ projects[id]['description'][0:100] }}<br>
+                        <a href="{{ '/projects/{}'.format(id) }}" style="color: rgb(255,255,255)">More</a>
+                        {% endfor %}
+                    </div>
+            </font> 
+            </div>
+        </div>
+    </body>
+</html>

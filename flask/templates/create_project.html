@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+    <body style="background-color:#393E46;">
+        <div style="text-align: center;">
+        <a href="/"><img src="static/banner.png" width="600px"></a><br>
+        <a href="/createproject"><img src="static/create_project_subbanner.png" width="600px"></a><br>
+            <div style="display: inline-block; text-align: left;">
+                <div class="box" style="width: 600px">
+                    <font  face="Helvetica" color="white">
+                        <form action="{{ url_for('add_project') }}" method='post'>
+                        Project name:<br>
+                        <input type="text" name="name"><br><br>
+                        Description:<br>
+                        <input type="text" name="description" size="50" style="width: 600px height: 400px"><br><br>
+                        Target (in Satoshis):<br>
+                        <input type="number" name="target" min="0"><br><br>
+                        Address:<br>
+                        <input type="text" name="address"><br><br>
+                        Estimated target reach (in days):<br>
+                        <input type="number" name="etr" min="0"><br><br>
+                        <input type="submit" value="Submit">
+                        </form>
+                    </font>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
