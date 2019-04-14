@@ -1,0 +1,101 @@
+The lifecycle of a transaction
+
+Literature:
+https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list
+https://bitcoin.org/nl/ontwikkelvoorbeelden#simple-spending
+https://samsclass.info/141/proj/pBitc1.htm
+https://bitcoin.stackexchange.com/questions/58165/regtest-method-not-found
+
+
+REGTEST start
+Create a new regtest network locally by, safely delete the regtest subdirectory and restart Bitcoin
+Core to start a new regtest.
+
+WALLET CREATION
+bitcoin-wallet -wallet=<name> create
+bitcoin-cli -wallet=<name>  (-walletbroadcast)
+
+ADDRESS CREATION
+To generate new address:
+	bitcoin-cli getnewaddress
+>>2N18mma86goBGrCofc2WKnEW93pxEVq5211
+	
+Generate new addres (redo the same as above) amd store in bash variable NEW_ADDRESS
+	bitcoin-cli getnewaddres
+>>2N15sv8MdPt59JGaE9jLW9wWm1JwuegH3L3
+	NEW_ADDRESS=2N15sv8MdPt59JGaE9jLW9wWm1JwuegH3L3
+
+GENERATE BITCOINS
+Mine some empty blocks to get a reward to get some money. (CAN DO MULTIPLE TIMES) and returns the block hash
+	bitcoin-cli generatetoaddress 1 “2N8ySeZfJd6tYNjEYYmopHwFCh67E8NeHVZ”
+>>4a0263ab7ec64062c3f63fdf27a04dfca9d608682f9adb7b9cc33919c9faaafa
+
+MAKE TRANSACTION:
+spend 1 from 2N8ySeZfJd6tYNjEYYmopHwFCh67E8NeHVZ to 2N5X74rgatyJs35tuiWt6k2TpkAEL3GaJtc and return the transaction TXID
+	bitcoin-cli sendtoaddress $NEW_ADDRESS 10.000
+>>1f1f26f9ae34db08fafaee297a2faf9546f61af3788250d3faaf425b23c4374e
+
+GET BALANCE:
+check balance of my_address
+	 bitcoin-cli getbalance
+>>1099.99996680
+
+check balance of some address
+	bitcoin-cli getreceivedbyaddress 2N18mma86goBGrCofc2WKnEW93pxEVq5211
+>>0.0000
+
+to be improved
+account=123abc
+bitcoin-cli -regtest setaccount $address $account
+bitcoin-cli -regtest getbalance $account
+
+
+https://bitcoin.org/en/developer-reference#createrawtransaction reference to RPC API calls up to bitcoin core version 0.17
+
+https://bitcoin.org/nl/ontwikkelvoorbeelden#complex-raw-transaction example of 2 output transaction/multiple anyone can sign hash flag signature
+
+REDOWNLOAD BITCOIN CORE VERSION 0.17
+
+WALLET CREATION
+Create a wallet with no encryption:
+	bitcoin-wallet -wallet=<name> create
+
+
+REGTEST start
+Create a new regtest network locally by, safely delete the regtest subdirectory and restart Bitcoin
+Core to start a new regtest. Also the wallet flag is used to use the newly created wallet
+	bitcoin-cli -wallet=<name>  (-walletbroadcast)
+
+ADDRESS CREATION
+To generate new address and store in account:
+	bitcoin-cli getnewaddress <”account”>
+
+GET PRIVATEKEYS
+To get the private keys of an address:
+	bitcoin-cli dumpprivkey <address>
+
+GENERATE BTC TO ADDRESS
+Mine empty blocks and generate amount BTC of these to addres. NOTE: need 100 block confirmation on -regtest
+	bitcoin-cli generatetoaddress amount <address>
+
+
+bitcoin-cli createrawtransaction '''
+[
+]
+''' '''
+{
+  "2NFYFxnjNN8qttYxg3zauaXSfG6kNeVqrNx”: 1.0
+}'''
+
+
+The consecutive adding and signing of UTXO's by investors is done by decoding
+the hex of the transaction, adding the input which points to the unspent UTXO,
+encoding to raw hex format and finally signing with the SigHash
+ALL|ANYONECANPAY.
+
+Example:
+
+./bitcoin-cli -regtest signrawtransaction "02000000000100e1f5050000000017a914f48b7c91a6c0ffa70ac08648569145c25f930dc08700000000" '[{"txid":"4325a5db66cbc8e9ff6a585cd0e8a2288ea74f9b46d2972b93f63bbb7d09a23e","vout":0,"scriptPubKey":"a91479a4c9484b0868263fa0c067449eba5e6b53e38d87","redeemScript":""}]' '["cSMSho7nJJFC1toarsv8f785WLsvXU7RvtnigHN7dCBcdBX6gpSb"]' "ALL|ANYONECANPAY”
+
+TODO: simulate the signing of multiple investors and test the signing
+procedure.
